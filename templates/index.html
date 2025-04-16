@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - CK Real Estate{% endblock %}
+
+{% block hero %}
+  <img src="{% static 'images/livingroom.jpg' %}" alt="Interior" class="hero-image">
+  <h1>Your Future, Unlocked.</h1>
+  <p class="subhead">Empowering clients to make confident real estate decisions through expert guidance, integrity, and unmatched local knowledge.</p>
+{% endblock %}
+
+{% block content %}
+<section class="featured">
+  <h2>Featured Listing</h2>
+  <div class="listing-box">
+    <div class="listing-photo"></div>
+    <div class="listing-info">
+      <p class="price">{{ price }}</p>
+      <p>{{ property_type }}</p>
+      <p>{{ neighborhood }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
