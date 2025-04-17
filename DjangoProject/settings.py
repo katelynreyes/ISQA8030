@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["localhost", "kbkoehn.pythonanywhere.com", '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'happenings.apps.HappeningsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,3 +135,6 @@ STATIC_ROOT = '/home/kbkoehn/ISQA8030/static'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
