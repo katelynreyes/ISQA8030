@@ -5,18 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}CK Real Estate{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://use.typekit.net/kav2rmp.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<script>
-  function toggleMenu(button) {
-    const menu = document.getElementById('side-menu');
-    menu.classList.toggle('open');
-
-    if (button) {
-      button.classList.toggle('active');
-    }
-  }
-</script>
 <body>
 
   <header>
@@ -24,24 +15,27 @@
      <div class="logo">
   <img src="{% static 'images/ckrealestate_logo.png' %}" alt="CK Real Estate Logo">
 </div>
-      <div class="nav-buttons">
-        <button class="contact">Contact</button>
-        <div class="menu-toggle" onclick="toggleMenu(this)">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-      </div>
+        <div class="nav-buttons">
+  <button class="contact">CONTACT</button>
+  <button class="menu-toggle" onclick="toggleMenu(this)">
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <span class="menu-text">MENU</span>
+  </button>
+</div>
     </div>
     {% block hero %}{% endblock %}
   </header>
 
   <nav id="side-menu" class="side-menu">
-    <button onclick="toggleMenu()">X Menu</button>
+    <button onclick="toggleMenu()">X MENU</button>
     <ul>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#listings">Listings</a></li>
-      <li><a href="#omaha">Omaha Happenings</a></li>
+      <li><a href="#about">ABOUT US</a></li>
+      <li><a href="#listings">LISTINGS</a></li>
+      <li><a href="#omaha">OMAHA HAPPENINGS</a></li>
     </ul>
   </nav>
 
@@ -54,10 +48,29 @@
   </footer>
 
   <script>
-    function toggleMenu() {
-      document.getElementById('side-menu').classList.toggle('open');
+  function toggleMenu(button) {
+    const menu = document.getElementById('side-menu');
+    const backdrop = document.getElementById('backdrop');
+
+    menu.classList.toggle('open');
+    backdrop.classList.toggle('active');
+    if (button) {
+      button.classList.toggle('active');
     }
+  }
+
+  function closeMenu() {
+    const menu = document.getElementById('side-menu');
+    const backdrop = document.getElementById('backdrop');
+    const toggle = document.querySelector('.menu-toggle');
+
+    menu.classList.remove('open');
+    backdrop.classList.remove('active');
+    toggle.classList.remove('active');
+  }
   </script>
+
+<div id="backdrop" class="backdrop" onclick="closeMenu()"></div>
 
 </body>
 </html>
