@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
 {% if all_happenings %}
     <ul>
     {% for happening in all_happenings %}
@@ -7,3 +11,5 @@
 {% else %}
     <p>No happenings are available.</p>
 {% endif %}
+{% endblock %}
+
