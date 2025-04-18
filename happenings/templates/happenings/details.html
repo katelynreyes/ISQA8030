@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if happening %}
+    <h1>{{ happening.category }}</h1>
+    <p><small>{{ happening.happening_created_date }}</small></p>
+    <br/>
+    <br/>
+    <img src='{{ happening.photo.url }}' alt="Happening Image"/>
+    <p>{{ happening.happening_description }}</p>
+{% else %}
+    <p>No happenings are available.</p>
+{% endif %}
+{% endblock %}
