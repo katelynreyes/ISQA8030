@@ -33,9 +33,9 @@
   <nav id="side-menu" class="side-menu">
     <button onclick="toggleMenu()">X MENU</button>
     <ul>
-      <li><a href="#about">ABOUT US</a></li>
-      <li><a href="#listings">LISTINGS</a></li>
-      <li><a href="#omaha">OMAHA HAPPENINGS</a></li>
+      <li><a href="{% url 'about' %}">ABOUT US</a></li>
+      <li><a href="{% url 'listings' %}">LISTINGS</a></li>
+      <li><a href="{% url 'omaha' %}">OMAHA HAPPENINGS</a></li>
     </ul>
   </nav>
 

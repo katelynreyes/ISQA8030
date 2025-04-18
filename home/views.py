@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Listing
 
+def about(request):
+    return render(request, 'about.html')
 def index(request):
     listing = Listing.objects.first()  # show first for now
     return render(request, 'index.html', {
