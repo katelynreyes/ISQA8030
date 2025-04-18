@@ -15,7 +15,9 @@
          alt="Happening Image"
          style="max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 8px; margin-bottom: 1.5em;">
 
-    <p style="line-height: 1.6; font-size: 1.1em;">{{ happening.happening_description }}</p>
+    <p style="line-height: 1.6; font-size: 1.1em;">
+        {{ happening.happening_description|linebreaksbr }}
+    </p>
 </div>
 {% else %}
     <p>No happenings are available.</p>
