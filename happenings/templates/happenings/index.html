@@ -2,5 +2,14 @@
 {% load static %}
 
 {% block content %}
-
+{% if all_happenings %}
+    <ul>
+    {% for happening in all_happenings %}
+        <li><a href="/happenings/{{ happening.happening_id }}/">{{ happening.happening_description }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No happenings are available.</p>
+{% endif %}
 {% endblock %}
+
