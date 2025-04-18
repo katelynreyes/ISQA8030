@@ -11,6 +11,10 @@ class Happening(models.Model):
         GREAT_PLACE_TO_EAT = 'Great Place to Eat', 'Great Place to Eat'
 
     happening_id = models.AutoField(primary_key=True)
+    title = models.CharField(
+        max_length=100,
+        default='Title',
+    )
     category = models.CharField(
         max_length=100,
         choices=HappeningCategory.choices,
