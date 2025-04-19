@@ -13,8 +13,11 @@
   <header>
     <div class="header-top">
      <div class="logo">
-  <img src="{% static 'images/ckrealestate_logo.png' %}" alt="CK Real Estate Logo">
+  <a href="{% url 'home' %}">
+    <img src="{% static 'images/ckrealestate_logo.png' %}" alt="CK Real Estate Logo">
+  </a>
 </div>
+
         <div class="nav-buttons">
   <button class="contact">CONTACT</button>
   <button class="menu-toggle" onclick="toggleMenu(this)">
