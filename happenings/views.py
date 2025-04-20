@@ -5,8 +5,20 @@ from happenings.models import Happening
 
 
 def index(request):
-    all_happenings = Happening.objects.order_by('happening_created_date')
-    context = {"all_happenings": all_happenings}
+    grouped_happenings = []
+
+    for value, display_name in Happening.HappeningCategory.choices:
+        happenings = Happening.objects.filter(category=value).order_by('-happening_created_date')
+        if happenings.exists():
+            grouped_happenings.append({
+                "category_display": display_name,
+                "happenings": happenings
+            })
+
+    context = {
+        "grouped_happenings": grouped_happenings
+    }
+
     return render(request, "happenings/index.html", context)
 
 def details(request, happening_id):
