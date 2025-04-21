@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="padding: 2em;">
+    {% if grouped_happenings %}
+        {% for group in grouped_happenings %}
+            <h2 style="margin-top: 2em; margin-bottom: 1em; font-size: 1.5em; border-bottom: 2px solid #ccc; padding-bottom: 0.5em;">
+                {{ group.category_display }}
+            </h2>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5em;">
+                {% for happening in group.happenings %}
+                    <div style="
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        width: 250px;
+                        padding: 12px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        transition: transform 0.2s ease;
+                    "
+                         onmouseover="this.style.transform='scale(1.02)'"
+                         onmouseout="this.style.transform='scale(1)'"
+                    >
+                        <a href="/happenings/{{ happening.happening_id }}/" style="text-decoration: none; color: inherit;">
+                            <img src="{{ happening.photo.url }}"
+                                 alt="Image"
+                                 style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+
+                            <div style="margin-top: 0.75em;">
+                                <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.25em;">
+                                    {{ happening.title }}
+                                </div>
+
+                                {% if happening.happening_description|length > 50 %}
+                                    <p>{{ happening.happening_description|slice:":50" }}...</p>
+                                {% else %}
+                                    <p>{{ happening.happening_description }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No happenings are available.</p>
+    {% endif %}
+</div>
+{% endblock %}
