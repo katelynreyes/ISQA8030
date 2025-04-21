@@ -42,7 +42,7 @@ class listing_photo(models.Model):
     """model for the listing photos"""
     photo_id = models.BigAutoField(primary_key=True)
     photo_url = models.ImageField(upload_to='listing_images/', blank=True)
-    listing = models.ForeignKey('listing', on_delete= models.CASCADE)
+    listing = models.ForeignKey('listing', on_delete= models.CASCADE, null=True)
 
 
 class neighborhood(models.Model):
