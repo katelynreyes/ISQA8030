@@ -1,10 +1,18 @@
 from django.contrib import admin
-from .models import Listing
+from listings.models import listing, neighborhood, property_type, listing_photo, price_search
 
-admin.site.register(Listing)
-from listings.models import listing, neighborhood, property_type, price
+class photo_inline(admin.TabularInline):
+    model = listing_photo
 
-admin.site.register(listing)
+class listing_admin(admin.ModelAdmin):
+    inlines = [photo_inline
+
+    ]
+
+
+admin.site.register(listing, listing_admin)
 admin.site.register(neighborhood)
 admin.site.register(property_type)
-admin.site.register(price)
+admin.site.register(price_search)
+admin.site.register(listing_photo)
+
