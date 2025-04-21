@@ -42,28 +42,31 @@ class listing_photo(models.Model):
     """model for the listing photos"""
     photo_id = models.BigAutoField(primary_key=True)
     photo_url = models.ImageField(upload_to='listing_images/', blank=True)
-    listing = models.ForeignKey('listing', on_delete= models.CASCADE)
+    listing = models.ForeignKey(listing, on_delete= models.CASCADE, null = 'True')
 
 
 class neighborhood(models.Model):
     """model for a neighborhood type"""
     name = [
-        ('Aksarben Village','aksarben village'),
-        ('Benson','benson'),
-        ('Blackstone', 'blackstone'),
-        ('Downtown', 'downtown'),
-        ('Dundee', 'dundee'),
-        ('Elkhorn', 'elkhorn'),
-        ('Field Club', 'field club'),
-        ('Midtown Crossing', 'midtown crossing'),
-        ('Millard', 'millard'),
-        ('Old Market', 'old market'),
-        ('Regency', 'regency'),
-        ('South Omaha', 'south omaha'),
-        ('West Omaha', 'west omaha')
+        ('Aksarben Village','Aksarben Village'),
+        ('Benson','Benson'),
+        ('Blackstone', 'Blackstone'),
+        ('Downtown', 'Downtown'),
+        ('Dundee', 'Dundee'),
+        ('Elkhorn', 'Elkhorn'),
+        ('Field Club', 'Field Club'),
+        ('Midtown Crossing', 'Midtown Crossing'),
+        ('Millard', 'Millard'),
+        ('Old Market', 'Old Market'),
+        ('Regency', 'Regency'),
+        ('South Omaha', 'South Omaha'),
+        ('West Omaha', 'West Omaha')
     ]
     neighborhood_id = models.BigAutoField(primary_key=True)
     neighborhood_name = models.CharField(max_length=100, choices=name)
+
+    def __str__(self):
+        return self.neighborhood_name
 
 
 class price_search(models.Model):
@@ -93,23 +96,26 @@ class price_search(models.Model):
     price_id = models.BigAutoField(primary_key=True)
     price_range = models.CharField(max_length=100, choices=price_choice)
 
+    def __str__(self):
+        return self.price_range
 
 class property_type(models.Model):
     """model for the property type"""
     types = [
-        ('Bungalow', 'bungalow'),
-        ('Colonial', 'colonial'),
-        ('Condominium', 'condominium'),
-        ('Craftsman', 'craftsman'),
-        ('Log Cabin', 'log cabin'),
-        ('Modern', 'modern'),
-        ('Ranch', 'ranch'),
-        ('Split Level', 'split level'),
-        ('Townhome', 'townhome'),
-        ('Tudor', 'tudor'),
-        ('Victorian', 'victorian')
+        ('Bungalow', 'Bungalow'),
+        ('Colonial', 'Colonial'),
+        ('Condominium', 'Condominium'),
+        ('Craftsman', 'Craftsman'),
+        ('Log Cabin', 'Log Cabin'),
+        ('Modern', 'Modern'),
+        ('Ranch', 'Ranch'),
+        ('Split Level', 'Split Level'),
+        ('Townhome', 'Townhome'),
+        ('Tudor', 'Tudor'),
+        ('Victorian', 'Victorian')
     ]
     property_id = models.BigAutoField(primary_key=True)
     property_type = models.CharField(max_length=100, choices=types)
 
-
+    def __str__(self):
+        return self.property_type
