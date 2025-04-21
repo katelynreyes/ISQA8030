@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
-<!-- listings/listings.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listings</title>
-</head>
-<body>
+{% load static %}
+
+{% block content %}
     <h1>Listings</h1>
 
     <ul>
@@ -23,6 +17,4 @@
             <li>No listings available.</li>
         {% endfor %}
     </ul>
-
-</body>
-</html>
+{% endblock %}
