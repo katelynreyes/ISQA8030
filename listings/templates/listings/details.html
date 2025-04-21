@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if listingItem %}
+<div style="max-width: 900px; margin: 2em auto; font-family: sans-serif;">
+
+    <!-- Header -->
+    <h1 style="font-size: 2.5em; margin-bottom: 0.5em;">Property Details</h1>
+
+    <!-- Blue section -->
+    <div style="background-color: #e6f0ff; padding: 2em; border-radius: 10px;">
+        <!-- Address -->
+        <h2 style="margin-bottom: 0.5em;">{{ listingItem.full_address }}</h2>
+
+        <!-- Photo carousel -->
+        <div id="carousel" style="position: relative; display: flex; justify-content: center; align-items: center; margin: 1em 0; height: 400px;">
+            {% for photo in listingItem.listing_photo_set.all %}
+            <img src="{{ photo.photo_url.url }}"
+                 class="carousel-image"
+                 style="display: {% if forloop.first %}block{% else %}none{% endif %}; max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px;">
+            {% endfor %}
+
+            <!-- Left/Right arrows -->
+            <div onclick="changeSlide(-1)" style="position: absolute; top: 50%; left: 10px; font-size: 2em; cursor: pointer; user-select: none;">&#10094;</div>
+            <div onclick="changeSlide(1)" style="position: absolute; top: 50%; right: 10px; font-size: 2em; cursor: pointer; user-select: none;">&#10095;</div>
+        </div>
+
+        <!-- Price and Status -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 1em 0;">
+            <div style="font-size: 2em; font-weight: bold;">${{ listingItem.property_price }}</div>
+            <div style="font-size: 1.2em;">Status: {{ listingItem.status|title }}</div>
+        </div>
+
+        <!-- Two-column property details -->
+        <div style="display: flex; justify-content: space-between;">
+            <!-- Left Column -->
+            <div>
+                <p><strong>Bedrooms:</strong> {{ listingItem.bedrooms }}</p>
+                <p><strong>Bathrooms:</strong> {{ listingItem.bathrooms }}</p>
+                <p><strong>Square Feet:</strong> {{ listingItem.sq_footage }}</p>
+            </div>
+            <!-- Right Column -->
+            <div>
+                <p><strong>Property Type:</strong> {{ listingItem.property_type.property_type }}</p>
+                <p><strong>Neighborhood:</strong> {{ listingItem.neighborhood.neighborhood_name }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- White section -->
+    <div style="margin-top: 2em;">
+        <h2>About This Property</h2>
+        <p style="line-height: 1.6;">{{ listingItem.description }}</p>
+    </div>
+
+    <!-- Call-to-action -->
+    <div style="text-align: center; margin-top: 3em;">
+        <h3>Interested or have questions<br>about this property?</h3>
+        <button style="margin-top: 1em; padding: 0.75em 2em; font-size: 1.1em; color: white; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">
+            Contact Carlos
+        </button>
+    </div>
+
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-image');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.style.display = (i === index) ? 'block' : 'none';
+        });
+    }
+
+    function changeSlide(direction) {
+        currentSlide = (currentSlide + direction + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Initialize carousel
+    showSlide(currentSlide);
+</script>
+{% else %}
+    <p>No listings are available.</p>
+{% endif %}
+{% endblock %}
