@@ -5,40 +5,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}CK Real Estate{% endblock %}</title>
-    <link rel="stylesheet" href="https://use.typekit.net/kav2rmp.css">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="https://use.typekit.net/kav2rmp.css">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 
   <header>
     <div class="header-top">
-     <div class="logo">
-  <a href="{% url 'home' %}">
-    <img src="{% static 'images/ckrealestate_logo.png' %}" alt="CK Real Estate Logo">
-  </a>
-</div>
+      <div class="logo">
+        <a href="{% url 'home' %}">
+          <img src="{% static 'images/ckrealestate_logo.png' %}" alt="CK Real Estate Logo">
+        </a>
+      </div>
 
-        <div class="nav-buttons">
-  <button class="contact">CONTACT</button>
-  <button class="menu-toggle" onclick="toggleMenu(this)">
-    <div class="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <span class="menu-text">MENU</span>
-  </button>
-</div>
+      <div class="nav-buttons">
+        <button class="contact">CONTACT</button>
+        <button class="menu-toggle" onclick="toggleMenu(this)">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span class="menu-text">MENU</span>
+        </button>
+      </div>
     </div>
     {% block hero %}{% endblock %}
   </header>
 
   <nav id="side-menu" class="side-menu">
-    <button onclick="toggleMenu()">X MENU</button>
+    <button onclick="closeMenu()">X MENU</button>
     <ul>
-      <li><a href="/about/">ABOUT US</a></li>
-      <li><a href="/listings/">LISTINGS</a></li>
-      <li><a href="/happenings/">OMAHA HAPPENINGS</a></li>
+      <li><a href="{% url 'home' %}">HOME</a></li>
+      <li><a href="{% url 'about' %}">ABOUT US</a></li>
+      <li><a href="{% url 'listings' %}">LISTINGS</a></li>
+      <li><a href="{% url 'happenings' %}">OMAHA HAPPENINGS</a></li>
     </ul>
   </nav>
 
@@ -51,29 +52,25 @@
   </footer>
 
   <script>
-  function toggleMenu(button) {
-    const menu = document.getElementById('side-menu');
-    const backdrop = document.getElementById('backdrop');
-
-    menu.classList.toggle('open');
-    backdrop.classList.toggle('active');
-    if (button) {
-      button.classList.toggle('active');
+    function toggleMenu(button) {
+      const menu = document.getElementById('side-menu');
+      const backdrop = document.getElementById('backdrop');
+      menu.classList.toggle('open');
+      backdrop.classList.toggle('active');
+      if (button) button.classList.toggle('active');
     }
-  }
 
-  function closeMenu() {
-    const menu = document.getElementById('side-menu');
-    const backdrop = document.getElementById('backdrop');
-    const toggle = document.querySelector('.menu-toggle');
-
-    menu.classList.remove('open');
-    backdrop.classList.remove('active');
-    toggle.classList.remove('active');
-  }
+    function closeMenu() {
+      const menu = document.getElementById('side-menu');
+      const backdrop = document.getElementById('backdrop');
+      const toggle = document.querySelector('.menu-toggle');
+      menu.classList.remove('open');
+      backdrop.classList.remove('active');
+      toggle.classList.remove('active');
+    }
   </script>
 
-<div id="backdrop" class="backdrop" onclick="closeMenu()"></div>
+  <div id="backdrop" class="backdrop" onclick="closeMenu()"></div>
 
 </body>
 </html>

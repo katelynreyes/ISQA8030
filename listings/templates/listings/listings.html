@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Listings</h1>
+
+    <ul>
+        {% for listing in listings %}
+            <li>
+                <strong>{{ listing.street }}</strong>, {{ listing.city }}, {{ listing.state }} <br>
+                Price: ${{ listing.property_price }} <br>
+                Bedrooms: {{ listing.bedrooms }} <br>
+                Bathrooms: {{ listing.bathrooms }} <br>
+                Description: {{ listing.description }} <br>
+            </li>
+        {% empty %}
+            <li>No listings available.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
