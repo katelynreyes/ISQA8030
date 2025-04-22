@@ -10,11 +10,11 @@
     <p style="font-size: 0.9em; color: #999; margin-bottom: 1.5em;">
         {{ happening.happening_created_date|date:"F j, Y, g:i a" }}
     </p>
-
+    {% if happening.photo %}
     <img src="{{ happening.photo.url }}"
          alt="Happening Image"
          style="max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 8px; margin-bottom: 1.5em;">
-
+    {% endif %}
     <p style="line-height: 1.6; font-size: 1.1em;">
         {{ happening.happening_description|linebreaksbr }}
     </p>
