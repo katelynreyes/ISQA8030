@@ -34,14 +34,22 @@
   </header>
 
   <nav id="side-menu" class="side-menu">
-    <button onclick="closeMenu()">X MENU</button>
-    <ul>
-      <li><a href="{% url 'home' %}">HOME</a></li>
-      <li><a href="{% url 'about' %}">ABOUT US</a></li>
-      <li><a href="{% url 'listings' %}">LISTINGS</a></li>
-      <li><a href="{% url 'happenings' %}">OMAHA HAPPENINGS</a></li>
-    </ul>
-  </nav>
+  <button onclick="closeMenu()">X MENU</button>
+  <ul>
+    <li><a href="{% url 'home' %}">HOME</a></li>
+    <li><a href="{% url 'about' %}">ABOUT US</a></li>
+    <li><a href="{% url 'listings' %}">LISTINGS</a></li>
+    <li><a href="{% url 'happenings' %}">OMAHA HAPPENINGS</a></li>
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser %}
+      <li><a href="/admin/">SITE ADMINISTRATION</a></li>
+      <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+    {% endif %}
+    {% else %}
+  <li><a href="admin/login">ADMIN LOGIN</a></li>
+{% endif %}
+  </ul>
+</nav>
 
   <main>
     {% block content %}{% endblock %}
