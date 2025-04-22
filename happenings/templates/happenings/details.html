@@ -18,6 +18,12 @@
     <p style="line-height: 1.6; font-size: 1.1em;">
         {{ happening.happening_description|linebreaksbr }}
     </p>
+    {% if happening.url %}
+    <div style="margin-top: 2em; padding-top: 1em; border-top: 1px solid #eee;">
+        <p style="font-weight: bold;">For more information, go to:</p>
+        <p><a href="https://{{ happening.url }}" target="_blank" rel="noopener noreferrer">{{ happening.url }}</a></p>
+    </div>
+{% endif %}
 </div>
 {% else %}
     <p>No happenings are available.</p>

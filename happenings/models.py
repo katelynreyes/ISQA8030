@@ -21,6 +21,6 @@ class Happening(models.Model):
         default=HappeningCategory.OMAHA_AREA_EVENT,
     )
     happening_description = models.TextField()
-    photo = models.ImageField(upload_to='happenings/')
-    url = models.TextField()
+    photo = models.ImageField(upload_to='happenings/', null=True)
+    url = models.TextField(null=True)
     happening_created_date = models.DateTimeField(auto_now_add=True)
