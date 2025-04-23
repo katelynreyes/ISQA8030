@@ -1,32 +1,40 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*$py.class
+*.so
+
+# Django database
+db.sqlite3
+
+# Environment variables and secrets
+.env
 
 # Virtual environment
-venv/
-env/
 .venv/
-.env/
+env/
+venv/
 
-# Django specific
+# IDE/editor config
+.idea/
+.vscode/
+
+# Django migration logs or compiled files
 *.log
 *.pot
-local_settings.py
-db.sqlite3
+
+# Static files (optional if you're building locally)
+staticfiles/
+static/
+
+# Media files (user uploads)
 media/
 
-# System files
-.DS_Store
-Thumbs.db
+# PyCharm project files
+*.iml
 
-# IDE and editor files
-*.swp
-*.swo
-.vscode/
-*.idea/
-*.sublime-project
-*.sublime-workspace
-
-# Packages
-node_modules/
+# Test coverage
+htmlcov/
+coverage.xml
+*.cover
+.pytest_cache/
+db.sqlite3
