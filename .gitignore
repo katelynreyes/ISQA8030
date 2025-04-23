@@ -37,3 +37,4 @@ htmlcov/
 coverage.xml
 *.cover
 .pytest_cache/
+db.sqlite3
