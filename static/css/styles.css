@@ -275,4 +275,16 @@ footer {
   .nav-buttons button:hover {
     background-color: #8DA638;
   }
+
+  .login-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+
 }
+

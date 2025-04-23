@@ -35,20 +35,30 @@
 
   <nav id="side-menu" class="side-menu">
   <button onclick="closeMenu()">X MENU</button>
-  <ul>
-    <li><a href="{% url 'home' %}">HOME</a></li>
-    <li><a href="{% url 'about' %}">ABOUT US</a></li>
-    <li><a href="{% url 'listings' %}">LISTINGS</a></li>
-    <li><a href="{% url 'happenings' %}">OMAHA HAPPENINGS</a></li>
-{% if request.user.is_authenticated %}
+ <ul>
+  <li><a href="{% url 'home' %}">HOME</a></li>
+  <li><a href="{% url 'about' %}">ABOUT US</a></li>
+  <li><a href="{% url 'listings' %}">LISTINGS</a></li>
+  <li><a href="{% url 'happenings' %}">OMAHA HAPPENINGS</a></li>
+
+  {% if request.user.is_authenticated %}
     {% if request.user.is_superuser %}
       <li><a href="/admin/">SITE ADMINISTRATION</a></li>
-      <li><a href="{% url 'logout' %}">LOGOUT</a></li>
     {% endif %}
-    {% else %}
-  <li><a href="admin/login">ADMIN LOGIN</a></li>
-{% endif %}
-  </ul>
+    <li>
+      <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="login-button">LOGOUT</button>
+      </form>
+    </li>
+  {% else %}
+    <li>
+      <form action="admin/login" method="get" style="display:inline;">
+        <button type="submit" class="login-button">ADMIN LOGIN</button>
+      </form>
+    </li>
+  {% endif %}
+</ul>
 </nav>
 
   <main>
