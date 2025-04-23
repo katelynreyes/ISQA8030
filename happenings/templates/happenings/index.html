@@ -2,49 +2,161 @@
 {% load static %}
 
 {% block content %}
-<div style="padding: 2em;">
-    {% if grouped_happenings %}
-        {% for group in grouped_happenings %}
-            <h2 style="margin-top: 2em; margin-bottom: 1em; font-size: 1.5em; border-bottom: 2px solid #ccc; padding-bottom: 0.5em;">
-                {{ group.category_display }}
-            </h2>
+<style>
+    .header-image {
+        width: 100%;
+        height: 500px; /* increase height to show more of the image */
+        object-fit: cover;
+        object-position: center top; /* centers horizontally, nudges upward */
+        border-bottom: 4px solid #ccc;
+        margin-bottom: 2em;
+    }
 
-            <div style="display: flex; flex-wrap: wrap; gap: 1.5em;">
-                {% for happening in group.happenings %}
-                    <div style="
-                        border: 1px solid #ccc;
-                        border-radius: 8px;
-                        width: 250px;
-                        padding: 12px;
-                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                        transition: transform 0.2s ease;
-                    "
-                         onmouseover="this.style.transform='scale(1.02)'"
-                         onmouseout="this.style.transform='scale(1)'"
-                    >
-                        <a href="/happenings/{{ happening.happening_id }}/" style="text-decoration: none; color: inherit;">
-                            <img src="{{ happening.photo.url }}"
-                                 alt="Image"
-                                 style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+    .hero-image-crop {
+        width: 100%;
+        max-width: 1200px; /* adjust this as needed */
+        height: 450px;      /* crop height */
+        overflow: hidden;
+        border-bottom: 4px solid #ccc;
+        margin: 0 auto 2em auto; /* centers it */
+    }
 
-                            <div style="margin-top: 0.75em;">
-                                <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.25em;">
-                                    {{ happening.title }}
-                                </div>
+    .hero-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+        object-position: center top;
+    }
 
-                                {% if happening.happening_description|length > 50 %}
-                                    <p>{{ happening.happening_description|slice:":50" }}...</p>
+    .intro-section {
+        text-align: center;
+        margin-bottom: 3em;
+        padding: 0 1em;
+    }
+
+    .intro-title {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 1em;
+    }
+
+    .intro-text {
+        font-size: 1.1em;
+        max-width: 800px;
+        margin: 0 auto;
+        color: #333;
+    }
+
+    .section-title {
+        font-size: 1.75em;
+        margin-bottom: 1em;
+        padding-bottom: 0.25em;
+        border-bottom: 2px solid #ccc;
+    }
+
+    .section-title.left {
+        text-align: left;
+    }
+
+    .section-title.right {
+        text-align: right;
+    }
+
+    .happening-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5em;
+        margin-bottom: 3em;
+    }
+
+    .happening-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        transition: transform 0.2s ease;
+        overflow: hidden;
+    }
+
+    .happening-card:hover {
+        transform: scale(1.02);
+    }
+
+    .happening-image {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+    }
+
+    .happening-content {
+        padding: 1em;
+    }
+
+    .happening-title {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 0.5em;
+    }
+
+    .happening-description {
+        font-size: 0.95em;
+        color: #444;
+    }
+</style>
+
+<div>
+    <!-- Static Header Image -->
+    <div class="hero-image-crop">
+        <img src="{% static 'images/omaha happenings_main.jpg' %}" alt="Welcome to Omaha" class="hero-image">
+    </div>
+    <!-- Welcome Section -->
+    <div class="intro-section">
+        <h1 class="intro-title">New to Omaha?</h1>
+        <p class="intro-text">
+            Welcome to Omaha, Nebraska! We hope you'll enjoy everything the Greater Omaha Metropolitan Area has to offer —
+            from a strong sense of community and vibrant arts and entertainment, to innovative businesses, excellent education,
+            and a great lifestyle. It's a city filled with amazing people, wonderful places to explore and call home, and plenty of exciting things to do!
+        </p>
+    </div>
+
+    <!-- Happenings Section -->
+    <div style="padding: 2em; max-width: 1200px; margin: auto;">
+        {% if grouped_happenings %}
+            {% for group in grouped_happenings %}
+                <h2 class="section-title {% cycle 'left' 'right' %}">
+                    {{ group.category_display }}
+                </h2>
+
+                <div class="happening-grid">
+                    {% for happening in group.happenings %}
+                        <div class="happening-card">
+                            <a href="/happenings/{{ happening.happening_id }}/" style="text-decoration: none; color: inherit;">
+                                {% if happening.photo %}
+                                    <img src="{{ happening.photo.url }}" alt="Image" class="happening-image">
                                 {% else %}
-                                    <p>{{ happening.happening_description }}</p>
+                                    <img src="{% static 'images/generic_cityscape.png' %}" alt="Default image" class="happening-image">
                                 {% endif %}
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No happenings are available.</p>
-    {% endif %}
+                                <div class="happening-content">
+                                    <div class="happening-title">
+                                        {{ happening.title }}
+                                    </div>
+                                    <div class="happening-description">
+                                        {% if happening.happening_description|length > 60 %}
+                                            {{ happening.happening_description|slice:":60" }}...
+                                        {% else %}
+                                            {{ happening.happening_description }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No happenings are available.</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
