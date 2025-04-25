@@ -10,15 +10,18 @@
 {% endblock %}
 
 {% block content %}
+  {% if listing %}
 <section class="featured">
   <h2>Featured Listing</h2>
   <div class="listing-box">
     <div class="listing-photo"></div>
     <div class="listing-info">
-      <p class="price">{{ price }}</p>
-      <p>{{ property_type }}</p>
-      <p>{{ neighborhood }}</p>
+      <p class="price">${{ listing.price|floatformat:"0" }}</p>
+      <p>{{ listing.property_type }}</p>
+      <p>{{ listing.neighborhood }}</p>
     </div>
   </div>
 </section>
+{% endif %}
 {% endblock %}
+

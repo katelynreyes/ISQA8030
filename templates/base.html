@@ -52,11 +52,12 @@
       </form>
     </li>
   {% else %}
-    <li>
-      <form action="admin/login" method="get" style="display:inline;">
-        <button type="submit" class="login-button">ADMIN LOGIN</button>
-      </form>
-    </li>
+   <li>
+  <form action="{% url 'admin:login' %}" method="get" style="display:inline;">
+    <button type="submit" class="login-button">ADMIN LOGIN</button>
+  </form>
+</li>
+
   {% endif %}
 </ul>
 </nav>
