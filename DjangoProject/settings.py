@@ -78,6 +78,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'DjangoProject.wsgi.application'
 
 
+if os.getenv('DJANGO_DEVELOPMENT') == 'True':
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_HOST = 'smtp.mailjet.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'd2d7f5ec469b0dffa62e2570d6ca6796'
+EMAIL_HOST_PASSWORD = '0d3dbece41a914d3879192e35e98c1cb'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'noreply@mailjet.com'
+
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
