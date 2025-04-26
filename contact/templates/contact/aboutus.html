@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - CK Real Estate{% endblock %}
+
+{% block content %}
+<section class="about">
+    <h1 class="about-title">ABOUT CK REAL ESTATE</h1>
+
+    <!-- Profile Photo + Contact Info Side by Side -->
+    <div class="contact-layout">
+        <!-- LEFT COLUMN -->
+        <div class="left-col">
+            <div class="profile-photo" style="background-image: url('{% static "images/carlos.png" %}');"></div>
+            <div class="profile-caption">
+                Carlos Kosala<br>
+                <span class="profile-subtitle">OWNER, DESIGNATED BROKER</span>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-col">
+            <div class="info">
+                <h3>CONTACT INFORMATION</h3>
+
+                <div class="contact-row">
+                    <div class="label">Address:</div>
+                    <div class="value">
+                        1515 Farnam Street, Suite 300<br>
+                        Omaha, NE 68102
+                    </div>
+                </div>
+
+                <div class="contact-row">
+                    <div class="label">Phone:</div>
+                    <div class="value">
+                        <a href="tel:4021234567">402-123-4567</a><br>
+                        <a href="#">Visit My Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BIO MOVED BELOW -->
+    <div class="bio">
+        <p>
+            Carlos Kosala is the owner and designated broker of CK Real Estate. After earning his degree in Business Administration,
+            he launched his real estate career with a respected Omaha-area brokerage. Motivated by a desire for independence and
+            a personalized client experience, Carlos went on to obtain his Broker’s License and start his own firm. With a deep
+            knowledge of the local market and a passion for helping clients find the right home, Carlos brings integrity,
+            experience, and personal attention to every transaction.
+        </p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="form-container">
+        <h2>Send Carlos a Message</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="ENTER YOUR EMAIL" aria-label="Email" required>
+            <input type="tel" name="cell" placeholder="ENTER YOUR CELL">
+            <textarea name="message" rows="4" placeholder="ENTER YOUR MESSAGE" required></textarea>
+            <input type="text" name="details" placeholder="ENTER PROPERTY DETAILS (IF APPLICABLE)">
+            <button type="submit">SUBMIT</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

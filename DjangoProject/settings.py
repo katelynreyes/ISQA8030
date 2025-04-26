@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'testApp.apps.TestappConfig',
     'home.apps.HomeConfig',
     'listings',
+    'contact',
 ]
 
 MIDDLEWARE = [
