@@ -57,11 +57,84 @@
     <!-- Call-to-action -->
     <div style="text-align: center; margin-top: 3em;">
         <h3>Interested or have questions<br>about this property?</h3>
-        <button style="margin-top: 1em; padding: 0.75em 2em; font-size: 1.1em; color: white; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">
-            Contact Carlos
-        </button>
+
+        <form id="contactForm" method="POST" action="{% url 'send_test_email' %}" style="margin-top: 3em; text-align: center;">
+            {% csrf_token %}
+            <input type="hidden" name="email" value="ckRealEstateOmaha@gmail.com">
+            <button type="submit"
+                style="padding: 0.75em 2em; font-size: 1.1em; color: white; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">
+                Contact Carlos
+            </button>
+        </form>
+
+        <!-- Placeholder for showing message -->
+        <div id="messageArea" style="margin-top: 1em;"></div>
+
+        <script>
+        // --- Toast popup function ---
+        function showToast(message, success = true) {
+            const toast = document.createElement('div');
+            toast.innerText = message;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.right = '20px';
+            toast.style.padding = '15px 20px';
+            toast.style.backgroundColor = success ? '#28a745' : '#dc3545'; // green for success, red for error
+            toast.style.color = 'white';
+            toast.style.borderRadius = '5px';
+            toast.style.boxShadow = '0 0 10px rgba(0,0,0,0.2)';
+            toast.style.zIndex = '9999';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.5s';
+
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '1';
+            }, 100); // fade in
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.remove();
+                }, 500); // fade out, then remove
+            }, 3000); // stay for 3 seconds
+        }
+
+        // --- Handle Contact Button Click ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const contactForm = document.querySelector('form[action="{% url 'send_test_email' %}"]');
+            if (contactForm) {
+                contactForm.addEventListener("submit", function(event) {
+                    event.preventDefault(); // prevent normal form submission
+
+                    fetch("{% url 'send_test_email' %}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "X-CSRFToken": '{{ csrf_token }}'
+                        },
+                        body: new URLSearchParams({
+                            email: "ckRealEstateOmaha@gmail.com"
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        showToast(data.message, true); // success toast
+                    })
+                    .catch(error => {
+                        showToast("Error sending email", false); // error toast
+                        console.error(error);
+                    });
+                });
+            }
+        });
+        </script>
     </div>
 
+</div>
+
+<div id="toast" style="visibility:hidden; min-width:250px; margin-left:-125px; background-color:#333; color:#fff; text-align:center; border-radius:2px; padding:16px; position:fixed; z-index:1; left:50%; bottom:30px; font-size:17px;">
+    <span id="toastMessage"></span>
 </div>
 
 <script>
