@@ -477,5 +477,17 @@ body {
 
 .form-container button:hover {
   background-color: #8DA638;
+
+  .login-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+
+   .login-button button:hover {
+    background-color: #8DA638;
+  }
 }
 

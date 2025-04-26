@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'listings',
     'contact',
+    'ckadmin',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/admin/'
