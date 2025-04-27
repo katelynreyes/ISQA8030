@@ -85,7 +85,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'd2d7f5ec469b0dffa62e2570d6ca6796'
 EMAIL_HOST_PASSWORD = '0d3dbece41a914d3879192e35e98c1cb'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'noreply@mailjet.com'
+DEFAULT_FROM_EMAIL = 'ckrealestateomaha@gmail.com'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
