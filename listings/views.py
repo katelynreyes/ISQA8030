@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.contrib import messages
 import requests
+from django.utils.html import escape
 
 # def index(request):
 #     return HttpResponse("Listings app")
@@ -22,11 +23,30 @@ def details(request, listing_id):
     return render(request, "listings/details.html", {"listingItem": listingItem})
 
 def send_test_email(request):
+    print(request.POST)
     # Example email content
+    name = request.POST.get('name')
+    sender_email = request.POST.get('sender_email')
+    phone = request.POST.get('phone')
+    message = request.POST.get('message')
+    listing_info = request.POST.get('listing_info')  # This is your autofilled field
+    recipient_email = request.POST.get('email')  # The hidden email input
+
     to_email = "ckRealEstateOmaha@gmail.com"
     subject = "Test Email"
     text_body = "This is a test email sent via Mailgun."
-    html_body = "<p>This is a <strong>test email</strong> sent via Mailgun.</p>"
+    # html_body = "<p>This is a <strong>test email</strong> sent via Mailgun.</p>"
+
+    html_body = f"""
+    <h1>New Request Received</h1><br/>
+    <ul>
+        <li><strong>Name:</strong> {escape(name)}</li>
+        <li><strong>Email:</strong> {escape(sender_email)}</li>
+        <li><strong>Phone:</strong> {escape(phone)}</li>
+        <li><strong>Message:</strong> {escape(message)}</li>
+        <li><strong>Regarding:</strong> {escape(listing_info)}</li>
+    </ul>
+    """
 
     # Sending the email
     response = EmailSender.send_email(
