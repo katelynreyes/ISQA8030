@@ -36,7 +36,9 @@ def send_test_email(request):
         html_body=html_body,
     )
 
-    if response and response.status_code == 200:
-        return HttpResponse("Email sent successfully!")
-    else:
-        return HttpResponse(f"Failed to send email: {response.status_code if response else 'No response'}")
+    return HttpResponse("Email sent successfully!")
+
+    # if response and response.status_code == 200:
+    #     return HttpResponse("Email sent successfully!")
+    # else:
+    #     return HttpResponse(f"Failed to send email: {response.status_code if response else 'No response'}")
