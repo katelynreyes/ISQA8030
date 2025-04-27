@@ -59,9 +59,9 @@
     <div style="text-align: center; margin-top: 3em;">
         <h3>Interested or have questions<br>about this property?</h3>
 
-
+        <br/>
             <!-- Contact Form -->
-        <h2>Send Carlos a Message</h2>
+        <h3>Send Carlos a Message</h3>
         <form id="contactForm" method="POST" action="{% url 'send_test_email' %}" style="margin-top: 3em; text-align: center;">
             {% csrf_token %}
 
@@ -96,7 +96,7 @@
             <!-- Submit button -->
             <button type="submit"
                 style="padding: 0.75em 2em; font-size: 1.1em; color: white; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">
-                Contact Carlos
+                Send to Carlos
             </button>
         </form>
 
