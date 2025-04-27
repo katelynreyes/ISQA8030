@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2efhmx^lkuh@t5od%fw3%arwy47fgoaerz)a3q468#78hzr*rr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "kbkoehn.pythonanywhere.com", '127.0.0.1']
 
@@ -86,6 +86,8 @@ EMAIL_HOST_USER = 'd2d7f5ec469b0dffa62e2570d6ca6796'
 EMAIL_HOST_PASSWORD = '0d3dbece41a914d3879192e35e98c1cb'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'ckrealestateomaha@gmail.com'
+MAILGUN_API_KEY = 'f66d45e2c9ddcce3685a3d4596ad6caa-10b6f382-23fc4ec2'
+MAILGUN_DOMAIN = 'sandboxfb0fd4584db04eda90dba7052cd77d91.mailgun.org'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
