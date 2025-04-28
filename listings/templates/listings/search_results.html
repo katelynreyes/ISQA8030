@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+  <h1>Search Results</h1>
+
+  {% if listings %}
+    <ul style="list-style-type: none; padding: 0;">
+      {% for listing in listings %}
+        <li style="border: 1px solid #ccc; padding: 1em; margin-bottom: 1em; border-radius: 10px;">
+          <strong>{{ listing.street }}</strong>, {{ listing.city }}, {{ listing.state }}<br>
+          Price: ${{ listing.property_price|floatformat:0|intcomma }}<br>
+          Bedrooms: {{ listing.bedrooms }}<br>
+          Bathrooms: {{ listing.bathrooms }}<br>
+          <strong>Neighborhood:</strong> {{ listing.neighborhood.neighborhood_name }}<br>
+          <strong>Type:</strong> {{ listing.property_type.property_type }}<br><br>
+          <a href="{% url 'details' listing.listing_id %}" style="text-decoration: none; color: white; background-color: #007bff; padding: 0.5em 1em; border-radius: 5px;">View Details</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No listings match your search. Please adjust your filters and try again!</p>
+  {% endif %}
+{% endblock %}

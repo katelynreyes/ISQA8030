@@ -119,3 +119,12 @@ class property_type(models.Model):
 
     def __str__(self):
         return self.property_type
+
+class SearchLog(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    property_type = models.ForeignKey('property_type', on_delete=models.SET_NULL, null=True, blank=True)
+    neighborhood = models.ForeignKey('neighborhood', on_delete=models.SET_NULL, null=True, blank=True)
+    price_search = models.ForeignKey('price_search', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"Search at {self.timestamp.strftime('%Y-%m-%d %H:%M')}"

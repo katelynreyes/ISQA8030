@@ -493,16 +493,20 @@ body {
 .form-container button:hover {
   background-color: #8DA638;
 
-  .login-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font: inherit;
-    padding: 0;
-  }
-
-   .login-button button:hover {
-    background-color: #8DA638;
-  }
+.login-button {
+  background: none;
+  border: none;
+  color: #2c3e50;
+  font-family: "barlow-semi-condensed", sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
 }
 
+.login-button:hover {
+  color: #4CAF50; /* Nice green color on hover */
+  text-decoration: underline;
+}
+
+}

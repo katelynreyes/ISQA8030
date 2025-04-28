@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 import requests
 from django.utils.html import escape
+from listings.models import SearchLog, property_type, neighborhood, price_search
 
 # def index(request):
 #     return HttpResponse("Listings app")
@@ -62,3 +63,34 @@ def send_test_email(request):
     #     return HttpResponse("Email sent successfully!")
     # else:
     #     return HttpResponse(f"Failed to send email: {response.status_code if response else 'No response'}")
+
+def search_listings(request):
+    property_type_id = request.GET.get('property_type')
+    neighborhood_id = request.GET.get('neighborhood')
+    price_search_id = request.GET.get('price_search')
+
+    listings = listing.objects.all()
+
+    if property_type_id:
+        listings = listings.filter(property_type_id=property_type_id)
+    if neighborhood_id:
+        listings = listings.filter(neighborhood_id=neighborhood_id)
+    if price_search_id:
+        listings = listings.filter(price_search_id=price_search_id)
+
+    # Log the search
+    if property_type_id or neighborhood_id or price_search_id:
+        SearchLog.objects.create(
+            property_type_id=property_type_id if property_type_id else None,
+            neighborhood_id=neighborhood_id if neighborhood_id else None,
+            price_search_id=price_search_id if price_search_id else None
+        )
+
+    context = {
+        'listings': listings,
+        'property_types': property_type.objects.all(),
+        'neighborhoods': neighborhood.objects.all(),
+        'price_ranges': price_search.objects.all(),
+    }
+
+    return render(request, 'listings/search_results.html', context)
