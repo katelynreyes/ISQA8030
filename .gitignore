@@ -38,3 +38,5 @@ coverage.xml
 *.cover
 .pytest_cache/
 db.sqlite3
+/listings/migrations/0009_alter_price_search_price_range_searchlog.py
+/listings/migrations/0008_alter_price_search_price_range.py
