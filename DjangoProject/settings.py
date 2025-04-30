@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'listings',
     'ckadmin',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

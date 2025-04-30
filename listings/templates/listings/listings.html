@@ -1,20 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
-    <h1>Listings</h1>
+<h1 style="color: #8DA638; font-family: 'Barlow Semi Condensed', sans-serif;">PROPERTY LISTINGS</h1>
 
-    <ul>
-        {% for listing in listings %}
-            <li>
-                <strong>{{ listing.street }}</strong>, {{ listing.city }}, {{ listing.state }} <br>
-                Price: ${{ listing.property_price }} <br>
-                Bedrooms: {{ listing.bedrooms }} <br>
-                Bathrooms: {{ listing.bathrooms }} <br>
-                Description: {{ listing.description }} <br>
-            </li>
-        {% empty %}
-            <li>No listings available.</li>
-        {% endfor %}
-    </ul>
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for listing in listings %}
+        <div style="flex: 0 0 48%; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px;">
+
+            {% with listing.listing_photo_set.first as photo %}
+                {% if photo %}
+                    <img src="{{ photo.photo_url.url }}" alt="Listing Photo" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 10px;">
+                {% endif %}
+            {% endwith %}
+
+            <div style="background-color: #333; color: #fff; padding: 15px; border-radius: 8px;">
+                <p style="font-size: 40px;">
+                    <strong>Price:</strong> ${{ listing.property_price|intcomma }}</p>
+                <p style="text-align: right; font-size: 25px;"><strong>Type:</strong> {{ listing.property_type }}</p>
+                <p style="text-align: right; font-size: 25px;"><strong>Neighborhood:</strong> {{ listing.neighborhood }}</p>
+                <p style="text-align: right; font-size: 25px;"><strong>Status:</strong> {{ listing.status }}</p>
+
+
+
+            </div>
+        </div>
+    {% empty %}
+        <p>No listings available.</p>
+    {% endfor %}
+</div>
 {% endblock %}
