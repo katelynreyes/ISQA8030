@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'testApp.apps.TestappConfig',
     'home.apps.HomeConfig',
     'listings',
+    'contact',
     'ckadmin',
     'django.contrib.humanize',
 ]
@@ -78,6 +80,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjangoProject.wsgi.application'
 
+#Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'd2d7f5ec469b0dffa62e2570d6ca6796'
+EMAIL_HOST_PASSWORD = '0d3dbece41a914d3879192e35e98c1cb'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'ckrealestateomaha@gmail.com'
+MAILGUN_API_KEY = 'f66d45e2c9ddcce3685a3d4596ad6caa-10b6f382-23fc4ec2'
+MAILGUN_DOMAIN = 'sandboxfb0fd4584db04eda90dba7052cd77d91.mailgun.org'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
