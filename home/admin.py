@@ -3,6 +3,9 @@ from listings.models import listing, neighborhood, property_type, listing_photo,
 
 class photo_inline(admin.TabularInline):
     model = listing_photo
+    extra = 0
+    fields = ["photo_url", "order"]
+    ordering = ['order']
 
 class listing_admin(admin.ModelAdmin):
     inlines = [photo_inline

@@ -36,7 +36,8 @@ class listing(models.Model):
     def full_address(self):
         """Returns the full address"""
         return f"{self.street} {self.city} {self.state} {self.zip}"
-
+    def __str__(self):
+        return f"{self.street}, {self.city})"
 
 
 class listing_photo(models.Model):
@@ -44,7 +45,13 @@ class listing_photo(models.Model):
     photo_id = models.BigAutoField(primary_key=True)
     photo_url = models.ImageField(upload_to='listing_images/', blank=True)
     listing = models.ForeignKey(listing, on_delete= models.CASCADE, null = 'True')
+    order = models.PositiveIntegerField(default=0)
 
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.photo_url}"
 
 class neighborhood(models.Model):
     """model for a neighborhood type"""

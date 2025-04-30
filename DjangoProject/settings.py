@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'listings',
     'contact',
     'ckadmin',
-    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
