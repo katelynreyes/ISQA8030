@@ -16,7 +16,7 @@ from listings.models import SearchLog, property_type, neighborhood, price_search
 #     return HttpResponse("Listings app")
 
 def listings_list(request):
-    listings = listing.objects.all()
+    listings = listing.objects.filter(is_visible=True)
     for listing_item in listings:
         # Get the first photo for each listing
         listing_item.first_photo = listing_item.listing_photo_set.first()
