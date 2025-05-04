@@ -6,6 +6,7 @@ from utils.email_sender import EmailSender
 
 
 def listings_list(request):
+<<<<<<< HEAD
     listings = listing.objects.all()
 
     # Filters from dropdowns
@@ -43,6 +44,13 @@ def listings_list(request):
     }
 
     return render(request, 'listings/listings.html', context)
+=======
+    listings = listing.objects.filter(is_visible=True)
+    for listing_item in listings:
+        # Get the first photo for each listing
+        listing_item.first_photo = listing_item.listing_photo_set.first()
+    return render(request, 'listings/listings.html', {'listings': listings})
+>>>>>>> 42c06e47c8930fbf5a5b73e0d74a95d44e8f85f7
 
 
 def details(request, listing_id):
