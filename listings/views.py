@@ -6,7 +6,6 @@ from utils.email_sender import EmailSender
 
 
 def listings_list(request):
-<<<<<<< HEAD
     listings = listing.objects.all()
 
     # Filters from dropdowns
@@ -28,11 +27,15 @@ def listings_list(request):
 
     if price_range and price_range.isdigit():
         try:
-            price_obj = price_search.objects.get(pk=int(price_range))
-            listings = listings.filter(
-                property_price__gte=price_obj.min_price,
-                property_price__lte=price_obj.max_price
-            )
+            price_obj = price_search.objects.get(pk=price_range)
+            min_price = price_obj.min_price
+            max_price = price_obj.max_price
+
+            if max_price == 0:  # You can treat max=0 as open-ended
+                listings = listings.filter(property_price__gte=min_price)
+            else:
+                listings = listings.filter(property_price__gte=min_price, property_price__lte=max_price)
+
         except price_search.DoesNotExist:
             listings = listings.none()
 
@@ -44,13 +47,6 @@ def listings_list(request):
     }
 
     return render(request, 'listings/listings.html', context)
-=======
-    listings = listing.objects.filter(is_visible=True)
-    for listing_item in listings:
-        # Get the first photo for each listing
-        listing_item.first_photo = listing_item.listing_photo_set.first()
-    return render(request, 'listings/listings.html', {'listings': listings})
->>>>>>> 42c06e47c8930fbf5a5b73e0d74a95d44e8f85f7
 
 
 def details(request, listing_id):
