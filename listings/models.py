@@ -77,6 +77,7 @@ class neighborhood(models.Model):
         return self.neighborhood_name
 
 class price_search(models.Model):
+    id = models.BigAutoField(primary_key=True)
     label = models.CharField(max_length=100, default="Unspecified")
     min_price = models.IntegerField(default=0)
     max_price = models.IntegerField(default=0)
