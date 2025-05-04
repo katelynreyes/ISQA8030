@@ -72,7 +72,17 @@
         <div style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 16px; margin-bottom: 16px; transition: transform 0.2s ease; cursor: pointer;">
             {% with listing.listing_photo_set.first as photo %}
                 {% if photo %}
-                    <img src="{{ photo.photo_url.url }}" alt="Listing Photo" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px;">
+                    {% if photo.photo_url %}
+                        {% if photo.photo_url.url %}
+                            <img src="{{ photo.photo_url.url }}" alt="Listing Photo" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px;">
+                        {% else %}
+                            <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px;">
+                        {% endif %}
+                    {% else %}
+                        <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px;">
+                    {% endif %}
+                {% else %}
+                    <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px;">
                 {% endif %}
             {% endwith %}
             <div style="background-color: #33475b; color: #fff; padding: 12px; border-radius: 8px;">
