@@ -3,31 +3,91 @@
 {% load humanize %}
 
 {% block content %}
-<h1 style="color: #8DA638; font-family: 'Barlow Semi Condensed', sans-serif;">PROPERTY LISTINGS</h1>
+<h1>PROPERTY LISTINGS</h1>
 
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    {% for listing in listings %}
-        <div style="flex: 0 0 48%; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px;">
+<!-- Search Form -->
+<form method="get" action="{% url 'listings' %}" style="display: flex; justify-content: center; gap: 60px; margin-bottom: 30px; flex-wrap: wrap;">
 
+<!-- Price Range Dropdown -->
+<div>
+    <label style="font-weight: bold; color: #33475b;">Price Range</label><br>
+    <select name="price_range" style="padding: 10px; border-radius: 6px; font-size: 16px;">
+        <option value="">Any Price Range</option>
+        {% for range in price_ranges %}
+            <option value="{{ range.id}}">{{ range.label }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<!-- Property Type Dropdown -->
+<div>
+    <label style="font-weight: bold; color: #33475b;">Property Type</label><br>
+    <select name="property_type" style="padding: 10px; border-radius: 6px; font-size: 16px;">
+        <option value="">Any Property Type</option>
+        {% for p in property_types %}
+    <option value="{{ p.property_id }}">{{ p.property_type }}</option>
+  {% endfor %}
+</select>
+</div>
+
+
+<!-- Neighborhood Dropdown -->
+<div>
+    <label style="font-weight: bold; color: #33475b;">Neighborhood</label><br>
+    <select name="neighborhood" style="padding: 10px; border-radius: 6px; font-size: 16px;">
+        <option value="">Any Neighborhood</option>
+        {% for hood in neighborhoods %}
+            <option value="{{ hood }}" {% if request.GET.neighborhood == hood %}selected{% endif %}>{{ hood }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+    <!-- Submit Button -->
+    <div style="align-self: flex-end;">
+        <button type="submit" style="padding: 12px 24px; background-color: #56687a; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+            SEARCH
+        </button>
+    </div>
+</form>
+
+
+<div style="width: 100%; background-color: #e5f6ff; padding: 40px 20px;">
+
+    <!-- Results Label -->
+    <h2 style="
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #33475b;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    ">
+        Results
+    </h2>
+
+    <!-- Listings Grid -->
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+     {% for listing in listings %}
+    <a href="{% url 'details' listing.listing_id %}" style="flex: 0 0 45%; text-decoration: none; color: inherit;">
+        <div style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 16px; margin-bottom: 16px; transition: transform 0.2s ease; cursor: pointer;">
             {% with listing.listing_photo_set.first as photo %}
                 {% if photo %}
-                    <img src="{{ photo.photo_url.url }}" alt="Listing Photo" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 10px;">
+                    <img src="{{ photo.photo_url.url }}" alt="Listing Photo" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px;">
                 {% endif %}
             {% endwith %}
-
-            <div style="background-color: #333; color: #fff; padding: 15px; border-radius: 8px;">
-                <p style="font-size: 40px;">
-                    <strong>Price:</strong> ${{ listing.property_price|intcomma }}</p>
-                <p style="text-align: right; font-size: 25px;"><strong>Type:</strong> {{ listing.property_type }}</p>
-                <p style="text-align: right; font-size: 25px;"><strong>Neighborhood:</strong> {{ listing.neighborhood }}</p>
-                <p style="text-align: right; font-size: 25px;"><strong>Status:</strong> {{ listing.status }}</p>
-
-
-
+            <div style="background-color: #33475b; color: #fff; padding: 12px; border-radius: 8px;">
+                <p style="font-size: 28px; font-weight: bold;"><strong>Price:</strong> ${{ listing.property_price|floatformat:0|intcomma }}</p>
+                <p style="text-align: right; font-size: 18px; margin: 2px 0;"><strong>Type:</strong> {{ listing.property_type }}</p>
+                <p style="text-align: right; font-size: 18px; margin: 2px 0;"><strong>Neighborhood:</strong> {{ listing.neighborhood }}</p>
+                <p style="text-align: right; font-size: 18px; margin: 2px 0;"><strong>Status:</strong> {{ listing.status }}</p>
             </div>
         </div>
-    {% empty %}
-        <p>No listings available.</p>
-    {% endfor %}
+    </a>
+{% empty %}
+    <p>No listings available.</p>
+{% endfor %}
+
+    </div>
 </div>
 {% endblock %}
+

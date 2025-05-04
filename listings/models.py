@@ -76,36 +76,14 @@ class neighborhood(models.Model):
     def __str__(self):
         return self.neighborhood_name
 
-
 class price_search(models.Model):
-    """model for the price for the search report"""
-    price_choice = {
-        ('50,001 - 100,000', '50,001 - 100,000'),
-        ('100,001 - 150,000', '100,001 - 150,000'),
-        ('150,001 - 200,000', '150,001 - 200,000'),
-        ('200,001 - 250,000', '200,001 - 250,000'),
-        ('250,001 - 300,000', '250,001 - 300,000'),
-        ('3000,01 - 350,000', '300,001 - 350,000'),
-        ('350,001 - 400,000', '350,001 - 400,000'),
-        ('400,001 - 450,000', '400,001 - 450,000'),
-        ('450,001 - 500,000', '450,001 - 500,000'),
-        ('500,001 - 550,000', '500,001 - 550,000'),
-        ('550,001 - 600,000', '550,001 - 600,000'),
-        ('600,001 - 650,000', '600,001 - 650,000'),
-        ('650,001 - 700,000', '650,001 - 700,000'),
-        ('700,001 - 750,000', '700,001 - 750,000'),
-        ('750,001 - 800,000', '750,001 - 800,000'),
-        ('800,001 - 850,000', '800,001 - 850,000'),
-        ('850,001 - 900,000', '850,001 - 900,000'),
-        ('900,001 - 950,000', '900,001 - 950,000'),
-        ('950,001 - 1,000,000', '950,001 - 1,000,000')
-
-    }
-    price_id = models.BigAutoField(primary_key=True)
-    price_range = models.CharField(max_length=100, choices=price_choice)
+    label = models.CharField(max_length=100, default="Unspecified")
+    min_price = models.IntegerField(default=0)
+    max_price = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.price_range
+        return self.label
+
 
 class property_type(models.Model):
     """model for the property type"""
