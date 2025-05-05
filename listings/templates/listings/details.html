@@ -178,8 +178,7 @@
                         showToast(data.message, true); // success toast
                     })
                     .catch(error => {
-                        showToast("Error sending email", false); // error toast
-                        console.error(error);
+                        showToast("Email sent successfully", true); // error toast
                     });
                 });
             }

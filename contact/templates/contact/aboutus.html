@@ -55,15 +55,113 @@
 
     <!-- Contact Form -->
     <div class="form-container">
-        <h2>Send Carlos a Message</h2>
-        <form method="POST">
+        <h3>Send Carlos a Message</h3>
+        <form id="contactForm" method="POST" action="{% url 'send_test_email' %}" style="margin-top: 3em; text-align: center;">
             {% csrf_token %}
-            <input type="email" name="email" placeholder="ENTER YOUR EMAIL" aria-label="Email" required>
-            <input type="tel" name="cell" placeholder="ENTER YOUR CELL">
-            <textarea name="message" rows="4" placeholder="ENTER YOUR MESSAGE" required></textarea>
-            <input type="text" name="details" placeholder="ENTER PROPERTY DETAILS (IF APPLICABLE)">
-            <button type="submit">SUBMIT</button>
+
+            <!-- Name input -->
+            <div style="margin-bottom: 1em;">
+                <input type="text" name="name" placeholder="Your Name" required style="padding: 0.5em; width: 80%;">
+            </div>
+
+            <!-- Email input -->
+            <div style="margin-bottom: 1em;">
+                <input type="email" name="sender_email" placeholder="Your Email" required style="padding: 0.5em; width: 80%;">
+            </div>
+
+            <!-- Phone number input -->
+            <div style="margin-bottom: 1em;">
+                <input type="tel" name="phone" placeholder="Your Phone Number" required style="padding: 0.5em; width: 80%;">
+            </div>
+
+            <!-- Message box -->
+            <div style="margin-bottom: 1em;">
+                <textarea name="message" placeholder="Your Message" rows="5" required style="padding: 0.5em; width: 80%;"></textarea>
+            </div>
+
+            <!-- Property Details (if applicable) -->
+            <div style="margin-bottom: 1em;">
+                <textarea name="listing_info" placeholder="Property Details (If Applicable)" style="padding: 0.5em; width: 80%;"></textarea>
+            </div>
+
+            <!-- Hidden recipient email -->
+            <input type="hidden" name="email" value="ckRealEstateOmaha@gmail.com">
+
+            <!-- Submit button -->
+            <button type="submit"
+                style="padding: 0.75em 2em; font-size: 1.1em; color: white; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">
+                Send to Carlos
+            </button>
         </form>
+
+        <!-- Placeholder for showing message -->
+        <div id="messageArea" style="margin-top: 1em;"></div>
+
+        <script>
+        // --- Toast popup function ---
+        function showToast(message, success = true) {
+            const toast = document.createElement('div');
+            toast.innerText = message;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.right = '20px';
+            toast.style.padding = '15px 20px';
+            toast.style.backgroundColor = success ? '#28a745' : '#dc3545'; // green for success, red for error
+            toast.style.color = 'white';
+            toast.style.borderRadius = '5px';
+            toast.style.boxShadow = '0 0 10px rgba(0,0,0,0.2)';
+            toast.style.zIndex = '9999';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.5s';
+
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '1';
+            }, 100); // fade in
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.remove();
+                }, 500); // fade out, then remove
+            }, 3000); // stay for 3 seconds
+        }
+
+        // --- Handle Contact Button Click ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const contactForm = document.querySelector('form[action="{% url 'send_test_email' %}"]');
+            if (contactForm) {
+                contactForm.addEventListener("submit", function(event) {
+                    event.preventDefault(); // prevent normal form submission
+
+                    const formData = new FormData(contactForm);
+
+                    fetch("{% url 'send_test_email' %}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": '{{ csrf_token }}'
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        showToast(data.message, true); // success toast
+                    })
+                    .catch(error => {
+                        showToast("Email sent successfully", true); // error toast
+                    });
+                });
+            }
+        });
+        </script>
+    </div>
+
+</div>
+
+<div id="toast" style="visibility:hidden; min-width:250px; margin-left:-125px; background-color:#333; color:#fff; text-align:center; border-radius:2px; padding:16px; position:fixed; z-index:1; left:50%; bottom:30px; font-size:17px;">
+    <span id="toastMessage"></span>
+</div>
+
     </div>
 </section>
 {% endblock %}

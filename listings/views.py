@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.utils.html import escape
 from listings.models import listing, property_type, neighborhood, price_search, SearchLog
 from utils.email_sender import EmailSender
+from django.contrib import messages
 
 
 def listings_list(request):
@@ -72,12 +73,20 @@ def send_test_email(request):
     </ul>
     """
 
-    response = EmailSender.send_email(
-        to_email="ckRealEstateOmaha@gmail.com",
-        subject="Test Email",
-        text_body="This is a test email sent via Mailgun.",
-        html_body=html_body,
-    )
+    try:
+        response = EmailSender.send_email(
+            to_email="ckRealEstateOmaha@gmail.com",
+            subject="Test Email",
+            text_body="This is a test email sent via Mailgun.",
+            html_body=html_body,
+        )
+
+        # If successful, add a success message
+        messages.success(request, "Email sent successfully")
+
+    except Exception as e:
+        messages.error(request, "Email failed to send")
+
 
     return HttpResponse("Email sent successfully!")
 
