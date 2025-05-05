@@ -17,9 +17,27 @@
         <!-- Photo carousel -->
         <div id="carousel" style="position: relative; display: flex; justify-content: center; align-items: center; margin: 1em 0; height: 400px;">
             {% for photo in listingItem.listing_photo_set.all %}
-            <img src="{{ photo.photo_url.url }}"
-                 class="carousel-image"
-                 style="display: {% if forloop.first %}block{% else %}none{% endif %}; max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px;">
+                 {% if photo %}
+                    {% if photo.photo_url %}
+                        {% if photo.photo_url.url %}
+                            <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available"
+                                 class="carousel-image"
+                                 style="display: {% if forloop.first %}block{% else %}none{% endif %}; max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px;">
+                        {% else %}
+                            <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available"
+                                 class="carousel-image"
+                                 style="display: {% if forloop.first %}block{% else %}none{% endif %}; max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px;">
+                        {% endif %}
+                    {% else %}
+                        <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available"
+                                 class="carousel-image"
+                                 style="display: {% if forloop.first %}block{% else %}none{% endif %}; max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px;">
+                    {% endif %}
+                {% else %}
+                     <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available"
+                                 class="carousel-image"
+                                 style="display: {% if forloop.first %}block{% else %}none{% endif %}; max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 10px;">
+                {% endif %}
             {% endfor %}
 
             <!-- Left/Right arrows -->
