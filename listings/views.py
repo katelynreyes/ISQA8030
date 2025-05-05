@@ -43,7 +43,7 @@ def listings_list(request):
         'listings': listings,
         'property_types': property_type.objects.all(),
         'neighborhoods': neighborhood.objects.all(),
-        'price_ranges': price_search.objects.all(),
+        'price_ranges': price_search.objects.all().order_by('min_price'),
     }
 
     return render(request, 'listings/listings.html', context)
