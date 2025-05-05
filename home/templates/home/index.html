@@ -5,6 +5,16 @@
 {% block title %}Home - CK Real Estate{% endblock %}
 
 {% block hero %}
+    <style>
+        .hero-image {
+        width: 100%;
+        max-height: 600px;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+    }
+    </style>
   <img src="{% static 'images/livingroom.jpg' %}" alt="Interior" class="hero-image">
   <h1>Your Future, Unlocked.</h1>
   <p class="subhead">Empowering clients to make confident real estate decisions through expert guidance, integrity, and unmatched local knowledge.</p>
@@ -74,14 +84,6 @@
       font-size: 1.5rem;
       font-weight: bold;
       color: #2c3e50;
-    }
-    .hero-image {
-        width: 100%;
-        max-height: 600px;
-        object-fit: cover;
-        display: block;
-        margin: 0 auto;
-        border-radius: 8px;
     }
   </style>
 
