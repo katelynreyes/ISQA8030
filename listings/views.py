@@ -7,14 +7,14 @@ from django.contrib import messages
 
 
 def listings_list(request):
-    listings = listing.objects.all()
+    listings = listing.objects.filter(is_visible=True) #displays only the listings with the visible box checked
 
     # Filters from dropdowns
     price_range = request.GET.get('price_range')
     property_type_id = request.GET.get('property_type')
     neighborhood_name = request.GET.get('neighborhood')
 
-    listings = listing.objects.all()
+    #listings = listing.objects.all()
 
     if property_type_id and property_type_id.isdigit():
         listings = listings.filter(property_type_id=int(property_type_id))
