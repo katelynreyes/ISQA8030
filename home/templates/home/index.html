@@ -16,36 +16,31 @@
         }
     </style>
     <img src="{% static 'images/livingroom.jpg' %}" alt="Interior" class="hero-image">
-    <h1>Your Future, Unlocked.</h1>
+    <div style="text-align: center; margin-top: 1rem;">
+    <h2 style="font-weight: 300;">Your Future, Unlocked.</h2>
     <p class="subhead">Empowering clients to make confident real estate decisions through expert guidance, integrity, and unmatched local knowledge.</p>
+    </div>
 {% endblock %}
 
 {% block content %}
 {% if listing %}
 <style>
-  .featured {
-    margin-top: 2rem;
-    padding: 2rem;
-    background-color: #f1faff;
-    border-radius: 12px;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-  }
 
-  .listing-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
+.featured {
+  width: 100%;
+  padding: 2rem 4vw;
+  background-color: #f1faff;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
 
   .listing-photo-box {
     position: relative;
+
     width: 100%;
-    max-width: 600px;
-    height: 300px;
+    max-width: 700px;
+    height: 400px;
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
@@ -96,12 +91,8 @@
 
   /* Mobile responsiveness */
   @media (max-width: 768px) {
-    .listing-box {
-      flex-direction: column;
-      text-align: center;
-    }
 
-    .listing-photo-box {
+      .listing-photo-box {
       height: 250px;
     }
 
@@ -113,20 +104,25 @@
 
 <section class="featured">
   <a href="/listings/{{ listing.listing_id }}" class="listing-link" style="text-decoration: none; color: inherit;">
-    <div class="listing-box">
+     <div class="photo-heading" style="font-size:24px; font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem;">
+      FEATURED LISTING
+    </div>
+     <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; align-items: stretch;">
+      <!-- Image Section -->
       <div class="listing-photo-box">
         <div class="details-label">CLICK FOR DETAILS</div>
         {% if listing_photo_url %}
           <img src="{{ listing_photo_url }}" alt="Photo of {{ listing.property_type }} in {{ listing.neighborhood }}">
         {% else %}
-          <div class="photo-placeholder">No photo available</div>
+          <img src="{% static 'images/no-photo.jpg' %}" alt="No Property Photo Available">
         {% endif %}
       </div>
 
-      <div class="listing-info">
+      <!-- Info Section -->
+      <div class="listing-info" style="flex: 1 1 35%; display: flex; flex-direction: column; justify-content: center;">
         <p class="price">${{ listing.property_price|floatformat:"0"|intcomma }}</p>
-        <p>{{ listing.property_type }}</p>
-        <p>{{ listing.neighborhood }}</p>
+        <p>Type: {{ listing.property_type }}</p>
+        <p>Neighborhood: {{ listing.neighborhood }}</p>
       </div>
     </div>
   </a>
