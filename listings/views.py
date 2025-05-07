@@ -7,7 +7,6 @@ from django.contrib import messages
 
 
 def listings_list(request):
-    listings = listing.objects.all()
 
     # Filters from dropdowns
     price_range = request.GET.get('price_range')
