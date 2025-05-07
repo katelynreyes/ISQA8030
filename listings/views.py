@@ -4,9 +4,12 @@ from django.utils.html import escape
 from listings.models import listing, property_type, neighborhood, price_search, SearchLog
 from utils.email_sender import EmailSender
 from django.contrib import messages
+import logging
 
+logger = logging.getLogger(__name__)
 
 def listings_list(request):
+    logger.info("test")
     listings = listing.objects.filter(is_visible=True) #displays only the listings with the visible box checked
 
     # Filters from dropdowns
@@ -14,31 +17,44 @@ def listings_list(request):
     property_type_id = request.GET.get('property_type')
     neighborhood_name = request.GET.get('neighborhood')
 
+    # Keep track of objects for logging
+    selected_property_type = None
+    selected_neighborhood = None
+    selected_price_range = None
+
     #listings = listing.objects.all()
 
     if property_type_id and property_type_id.isdigit():
-        listings = listings.filter(property_type_id=int(property_type_id))
+        selected_property_type = property_type.objects.filter(pk=property_type_id).first()
+        if selected_property_type:
+            listings = listings.filter(property_type=selected_property_type)
 
     if neighborhood_name:
-        try:
-            neighborhood_obj = neighborhood.objects.get(neighborhood_name=neighborhood_name)
-            listings = listings.filter(neighborhood=neighborhood_obj)
-        except neighborhood.DoesNotExist:
+        selected_neighborhood = neighborhood.objects.filter(neighborhood_name=neighborhood_name).first()
+        if selected_neighborhood:
+            listings = listings.filter(neighborhood=selected_neighborhood)
+        else:
             listings = listings.none()
 
     if price_range and price_range.isdigit():
-        try:
-            price_obj = price_search.objects.get(pk=price_range)
-            min_price = price_obj.min_price
-            max_price = price_obj.max_price
-
-            if max_price == 0:  # You can treat max=0 as open-ended
+        selected_price_range = price_search.objects.filter(pk=price_range).first()
+        if selected_price_range:
+            min_price = selected_price_range.min_price
+            max_price = selected_price_range.max_price
+            if max_price == 0:
                 listings = listings.filter(property_price__gte=min_price)
             else:
                 listings = listings.filter(property_price__gte=min_price, property_price__lte=max_price)
-
-        except price_search.DoesNotExist:
+        else:
             listings = listings.none()
+
+    # Create a SearchLog if any filters were applied
+    if selected_property_type or selected_neighborhood or selected_price_range:
+        SearchLog.objects.create(
+            property_type=selected_property_type,
+            neighborhood=selected_neighborhood,
+            price_search=selected_price_range,
+        )
 
     context = {
         'listings': listings,
@@ -92,6 +108,8 @@ def send_test_email(request):
 
 
 def search_listings(request):
+
+    logger.info("test2")
     property_type_id = request.GET.get('property_type')
     neighborhood_id = request.GET.get('neighborhood')
     price_search_id = request.GET.get('price_search')
@@ -106,12 +124,16 @@ def search_listings(request):
         listings = listings.filter(price_search_id=price_search_id)
 
     # Log the search
+    logger.info("checking if we need a log for search")
     if property_type_id or neighborhood_id or price_search_id:
+        logger.info("yep, creating one")
         SearchLog.objects.create(
             property_type_id=property_type_id or None,
             neighborhood_id=neighborhood_id or None,
             price_search_id=price_search_id or None,
         )
+    else:
+        logger.info("nope, thats a big no dog")
 
     context = {
         'listings': listings,

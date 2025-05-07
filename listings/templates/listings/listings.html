@@ -37,7 +37,7 @@
     <select name="neighborhood" style="padding: 10px; border-radius: 6px; font-size: 16px;">
         <option value="">Any Neighborhood</option>
         {% for hood in neighborhoods %}
-            <option value="{{ hood }}" {% if request.GET.neighborhood == hood %}selected{% endif %}>{{ hood }}</option>
+            <option value="{{ hood.neighborhood_name }}" {% if request.GET.neighborhood == hood.neighborhood_name %}selected{% endif %}>{{ hood.neighborhood_name }}</option>
         {% endfor %}
     </select>
 </div>
