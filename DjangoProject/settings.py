@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'listings',
     'contact',
+    'reports',
     'ckadmin',
 ]
 
