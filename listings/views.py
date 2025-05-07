@@ -7,11 +7,14 @@ from django.contrib import messages
 
 
 def listings_list(request):
+    listings = listing.objects.filter(is_visible=True) #displays only the listings with the visible box checked
 
     # Filters from dropdowns
     price_range = request.GET.get('price_range')
     property_type_id = request.GET.get('property_type')
     neighborhood_name = request.GET.get('neighborhood')
+
+    #listings = listing.objects.all()
 
     if property_type_id and property_type_id.isdigit():
         listings = listings.filter(property_type_id=int(property_type_id))
@@ -22,9 +25,6 @@ def listings_list(request):
             listings = listings.filter(neighborhood=neighborhood_obj)
         except neighborhood.DoesNotExist:
             listings = listings.none()
-            neighborhood_obj = None
-    else:
-        neighborhood_obj = None
 
     if price_range and price_range.isdigit():
         try:
@@ -32,24 +32,13 @@ def listings_list(request):
             min_price = price_obj.min_price
             max_price = price_obj.max_price
 
-            if max_price == 0:  # max=0 means open-ended
+            if max_price == 0:  # You can treat max=0 as open-ended
                 listings = listings.filter(property_price__gte=min_price)
             else:
                 listings = listings.filter(property_price__gte=min_price, property_price__lte=max_price)
 
         except price_search.DoesNotExist:
             listings = listings.none()
-            price_obj = None
-    else:
-        price_obj = None
-
-    # ✅ Log the search
-    if property_type_id or neighborhood_name or price_range:
-        SearchLog.objects.create(
-            property_type_id=property_type_id if property_type_id and property_type_id.isdigit() else None,
-            neighborhood=neighborhood_obj,
-            price_search=price_obj
-        )
 
     context = {
         'listings': listings,
